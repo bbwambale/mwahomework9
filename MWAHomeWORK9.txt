@@ -1,6 +1,9 @@
 Answers:
 
 Qn.1: db.Zips.aggregate([{$match:{state:"IA"}}, {$group:{_id: "$state",zip_codes:{$addToSet:"$_id"}}}, {$project:{_id:1, zip_codes:1, state:"$_id"}}, {$sort:{zip_codes:1}}]).pretty()
+
 Qn.2: db.Zips.aggregate([{$match:{pop:{$lt:1000}}},{$project:{_id:0 , ZipCode:"$_id" ,population:"$pop"}}])
+
 Qn.3: Zips.aggregate([{$group:{_id:{city:"$city",state:"$state"}}, num_code:{$sum:1}}, {$match:{num_code:{$gt:1}}}, {$project:{_id:0, city:"$_id.city", state:"$_id.state"}}, {$sort:{state:1, city:1}}])
+
 Qn.4: Zips.aggregate([{$project:{_id:0, city:"$city", state:"$state", population:"$pop"}}, {$sort:{population:1, city:1}},{$group:{_id:"$state",city:{$first:"$city"}, population:{$first:"$population"}}}])
